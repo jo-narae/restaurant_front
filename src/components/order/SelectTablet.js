@@ -27,12 +27,12 @@ class SelectTablet extends Component {
     }));
   }
 
-  selectTabletFunc = (id, location) => {
+  selectTabletFunc = (id, tabletLocation) => {
     this.setState(state => ({
       ...state,
       selectId: id,
     }));
-    this.props.setTablet(id, location);
+    this.props.setTablet(id, tabletLocation);
   }
 
   nextStep(selectId) {
@@ -50,11 +50,11 @@ class SelectTablet extends Component {
           <Grid container spacing={1}>
             {this.state.tablets.map(tablet => (
               <Grid className={this.state.selectId === tablet.id ? 'active' : ''} item xs={3} key={tablet.id}>
-                <Button onClick={this.selectTabletFunc.bind(this, tablet.id, tablet.location)}>
+                <Button onClick={this.selectTabletFunc.bind(this, tablet.id, tablet.tabletLocation)}>
                   <Card>
                     <CardContent>
                       <Typography variant="h5" component="h2">
-                        {tablet.location}
+                        {tablet.tabletLocation}
                       </Typography>
                     </CardContent>
                   </Card>

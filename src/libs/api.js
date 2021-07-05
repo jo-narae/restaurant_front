@@ -1,8 +1,6 @@
 import axios from 'axios';
 const baseURI = 'http://localhost:4000';
 
-export const TestText = 'test';
-
 export const CooksList = async () => {
   return await axios.get(`${baseURI}/cooks`)
     .then(({ data }) => data)
@@ -29,6 +27,14 @@ export const getOrderList = async () => {
   return await axios.get(`${baseURI}/orders`)
     .then(({ data }) => data)
     .catch(() => alert('주문 정보를 가져오지 못했습니다.'));
+};
+
+export const TabletSave = async (saveObject) => {
+  return await axios.post(`${baseURI}/tablets`, saveObject);
+};
+
+export const TabletUpdate = async (updateObject) => {
+  return await axios.put(`${baseURI}/tablets/${updateObject.id}`, updateObject);
 };
 
 export const currentOrderList = async () => {

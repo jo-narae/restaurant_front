@@ -7,6 +7,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChromeReaderModeIcon from '@material-ui/icons/ChromeReaderMode';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import Link from '@material-ui/core/Link';
 
@@ -45,6 +46,14 @@ export const mainListItems = (
           <ChromeReaderModeIcon />
         </ListItemIcon>
         <ListItemText primary="Order Report" />
+      </ListItem>
+    </Link>
+    <Link color="inherit" href="/setting">
+      <ListItem button>
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary="Setting" />
       </ListItem>
     </Link>
   </div>

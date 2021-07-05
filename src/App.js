@@ -20,6 +20,7 @@ import Information from './components/Information';
 import Order from './components/Order';
 import OrderManagement from './components/OrderManagement';
 import OrderReport from './components/OrderReport';
+import Setting from './components/Setting';
 
 const drawerWidth = 240;
 
@@ -155,6 +156,7 @@ function App() {
                 <Route path="/order" exact component={Order} />
                 <Route path="/management" exact component={OrderManagement} />
                 <Route path="/report" exact component={OrderReport} />
+                <Route path="/setting" exact component={Setting} />
               </Switch>
             </Router>
           </Grid>

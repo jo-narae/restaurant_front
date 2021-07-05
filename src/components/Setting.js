@@ -6,19 +6,73 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
-import { CooksList, DishesList, TabletsList } from '../libs/api';
+import {
+    CooksList, 
+    DishesList,
+    TabletsList,
+    TabletSave,
+    TabletUpdate
+} from '../libs/api';
 
-import '../css/information.css';
-
-class Information extends Component {
+class Setting extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cooks: [],
       dishes: [],
-      tablets: []
+      tablets: [],
+      tabletLocation: '',
     };
+  }
+
+  setTabletLocation(tabletLocation) {
+    this.setState(state =>({
+        ...state,
+        tabletLocation
+    }));
+  }
+
+  async insertTablet(tabletLocation) {
+    await TabletSave({ tabletLocation })
+    .then(async () => {
+        const tablets = await TabletsList();
+        this.setState(current => ({
+            ...current,
+            tabletLocation: '',
+            tablets,
+        }));
+    })
+    .catch(() => alert('정상적으로 처리되지 않았습니다.'));
+  }
+
+  setTablet(tablet, tabletLocation) {
+    const tabletsArr = this.state.tablets.map(item => {
+        if(item.id == tablet.id) return { ...tablet, tabletLocation };
+        else return item;
+    })
+
+    this.setState(current => ({
+        ...current,
+        tablets: [],
+        tablets: tabletsArr,
+    }));
+  }
+
+  async updateTablet(tablet) {
+    await TabletUpdate(tablet)
+    .then(async () => {
+        const tablets = await TabletsList();
+        this.setState(current => ({
+            ...current,
+            tabletLocation: '',
+            tablets,
+        }));
+    })
+    .catch(() => alert('정상적으로 처리되지 않았습니다.'));
   }
 
   async componentDidMount() {
@@ -43,6 +97,7 @@ class Information extends Component {
               <TableRow>
                 <TableCell>아이디</TableCell>
                 <TableCell>위치</TableCell>
+                <TableCell>수정</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -51,12 +106,35 @@ class Information extends Component {
                   <TableCell component="th" scope="row">
                     {tablet.id}
                   </TableCell>
-                  <TableCell align="right">{tablet.tabletLocation}</TableCell>
+                  <TableCell>
+                      <TextField label="location"
+                        value={tablet.tabletLocation}
+                        onChange={e => this.setTablet(tablet, e.target.value)} />
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button variant="contained" color="primary" 
+                        onClick={() => this.updateTablet(tablet)}>
+                        수정
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+
+        <Grid container spacing={2}>
+            <Grid item>
+                <TextField id="tabletLocation" label="location"
+                onChange={e => this.setTabletLocation(e.target.value)} />
+            </Grid>
+            <Grid item>
+                <Button variant="contained" color="primary" 
+                    onClick={() => this.insertTablet(this.state.tabletLocation)}>
+                    입력
+                </Button>
+            </Grid>
+        </Grid>
 
         <h3>메뉴 정보</h3>
         <TableContainer component={Paper}>
@@ -112,4 +190,4 @@ class Information extends Component {
   }
 }
 
-export default Information;
+export default Setting;
