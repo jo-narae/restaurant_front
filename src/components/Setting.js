@@ -51,13 +51,12 @@ class Setting extends Component {
 
   setTablet(tablet, tabletLocation) {
     const tabletsArr = this.state.tablets.map(item => {
-        if(item.id == tablet.id) return { ...tablet, tabletLocation };
+        if(item.id === tablet.id) return { ...tablet, tabletLocation };
         else return item;
     })
 
     this.setState(current => ({
         ...current,
-        tablets: [],
         tablets: tabletsArr,
     }));
   }
